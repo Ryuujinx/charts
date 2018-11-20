@@ -21,8 +21,15 @@ spec:
       {{- if $port.protocol }}
       protocol: {{ $port.protocol }}
       {{- end }}
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: {{ template "fluentd-elasticsearch.fullname" . }}
+subsets:
+  - addresses:
+      - ip: 10.1.1.136
+    ports:
+      - port: {{ $port.port }}
   {{- end }}
-  selector:
-    app: {{ template "fluentd-elasticsearch.fullname" . }}
-    release: {{ .Release.Name }}
 {{- end }}
+
